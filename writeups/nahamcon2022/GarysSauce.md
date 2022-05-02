@@ -5,8 +5,8 @@ Created Sunday 01 May 2022
 	    flag_capture fc(.clk(clk), .rst(rst), .BTNL(BTNL), .SW(SW), .disp(disp));
 
 The workhorse is the main loop that takes the last character (8 bits) of the flag, sets the signals (SW) based on their binary values.  These signals are bound to the SW variables for the **``flag_capture``** function. That is where we need to look next. 
-``
-	    reg [7:0] mask = 8'b11111111;
+
+``	    reg [7:0] mask = 8'b11111111;
 	    initial 
 	    begin
 	        SW = 16'b0000000000000000;
@@ -31,8 +31,7 @@ The workhorse is the main loop that takes the last character (8 bits) of the fla
 Not much in here, other than the SW inputs being passed to **``garys_sauce``** function. Let's go there next.
  
 **__``src/garys_sauce.v``__**
-``
-	// a few interesting things here ... an intermediate value
+``	// a few interesting things here ... an intermediate value
 	    wire [7:0] intermediate;
 	
 	//...
@@ -51,8 +50,7 @@ Not much in here, other than the SW inputs being passed to **``garys_sauce``** f
 From **``flag_capture.v``**, we can see that intermediate is tied to the display variables. Let's check out **``myxor``**.
 
 **__``src/myxor.v``__**
-``
-	// output = input ^ 0x0d
+``	// output = input ^ 0x0d
 	module myxor(input [7:0] in, output [7:0] out);
 	    reg [7:0] value = 8'hd;  // hex 0x0d
 	    assign out = in ^ value;
